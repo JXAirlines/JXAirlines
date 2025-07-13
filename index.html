@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>巨象航空 - 飞友航空旗下高端品牌</title>
+    <link rel="icon" href="https://s21.ax1x.com/2025/06/18/pVVCOgA.png" type="image/png">
     <style>
         * {
             margin: 0;
@@ -98,22 +99,6 @@
             max-width: 600px;
         }
         
-        .btn {
-            display: inline-block;
-            background-color: #ffcc00;
-            color: #003366;
-            padding: 12px 30px;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 18px;
-            transition: background-color 0.3s;
-        }
-        
-        .btn:hover {
-            background-color: #e6b800;
-        }
-        
         .section {
             padding: 80px 0;
             max-width: 1200px;
@@ -140,16 +125,28 @@
             overflow: hidden;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s;
+            cursor: pointer;
         }
         
         .aircraft:hover {
             transform: translateY(-10px);
         }
         
+        .aircraft-img-container {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
         .aircraft-img {
             width: 100%;
-            height: 200px;
+            height: auto;
+            min-height: 100%;
             object-fit: cover;
+            transition: transform 0.3s;
         }
         
         .aircraft-info {
@@ -159,6 +156,46 @@
         .aircraft-info h3 {
             margin-bottom: 10px;
             color: #003366;
+        }
+        
+        /* 图片放大效果 */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .image-modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-content img {
+            width: 100%;
+            height: auto;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
         }
         
         .about {
@@ -321,6 +358,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- 图片放大模态框 -->
+    <div class="image-modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img id="expandedImg" src="" alt="放大图片">
+        </div>
+    </div>
+
     <header>
         <div class="header-container">
             <img src="https://s21.ax1x.com/2025/06/18/pVVCOgA.png" alt="巨象航空 Logo" class="logo">
@@ -347,35 +392,45 @@
         <h2 class="section-title">我们的机队</h2>
         <div class="fleet">
             <div class="aircraft">
-                <img src="https://s21.ax1x.com/2025/06/18/pVVPC4g.jpg" alt="巨象航空 A380" class="aircraft-img">
+                <div class="aircraft-img-container">
+                    <img src="https://s21.ax1x.com/2025/06/18/pVVPC4g.jpg" alt="巨象航空 波音747" class="aircraft-img" onclick="expandImage(this)">
+                </div>
                 <div class="aircraft-info">
-                    <h3>空中客车 A380</h3>
+                    <h3>波音 747</h3>
                     <p>我们的旗舰机型，提供无与伦比的舒适度和豪华体验。双层客舱设计，配备最先进的娱乐系统。</p>
                 </div>
             </div>
             <div class="aircraft">
-                <img src="https://s21.ax1x.com/2025/06/18/pVVCxDP.jpg" alt="巨象航空 B747" class="aircraft-img">
+                <div class="aircraft-img-container">
+                    <img src="https://s21.ax1x.com/2025/06/18/pVVCxDP.jpg" alt="巨象航空 空中客车A380" class="aircraft-img" onclick="expandImage(this)">
+                </div>
                 <div class="aircraft-info">
-                    <h3>波音 747</h3>
+                    <h3>空中客车 A380</h3>
                     <p>航空界的传奇机型，提供宽敞的客舱空间和卓越的飞行性能，特别适合长途航线。</p>
                 </div>
             </div>
             <div class="aircraft">
-                <img src="https://s21.ax1x.com/2025/07/13/pVlrwpF.jpg" alt="巨象航空 A380" class="aircraft-img">
+                <div class="aircraft-img-container">
+                    <img src="https://s21.ax1x.com/2025/07/13/pVlrwpF.jpg" alt="巨象航空 A380特别涂装" class="aircraft-img" onclick="expandImage(this)">
+                </div>
                 <div class="aircraft-info">
                     <h3>空中客车 A380</h3>
                     <p>特别涂装版，为纪念巨象航空成立而设计，提供更加豪华的商务舱体验。</p>
                 </div>
             </div>
             <div class="aircraft">
-                <img src="https://s21.ax1x.com/2025/07/13/pVlr0l4.jpg" alt="巨象航空 A320neo" class="aircraft-img">
+                <div class="aircraft-img-container">
+                    <img src="https://s21.ax1x.com/2025/07/13/pVlr0l4.jpg" alt="巨象航空 A320neo" class="aircraft-img" onclick="expandImage(this)">
+                </div>
                 <div class="aircraft-info">
                     <h3>空中客车 A320neo</h3>
                     <p>最先进的单通道客机，燃油效率高，噪音低，适合中短程航线运营。</p>
                 </div>
             </div>
             <div class="aircraft">
-                <img src="https://s21.ax1x.com/2025/07/13/pVlrB6J.jpg" alt="巨象航空 737" class="aircraft-img">
+                <div class="aircraft-img-container">
+                    <img src="https://s21.ax1x.com/2025/07/13/pVlrB6J.jpg" alt="巨象航空 波音737" class="aircraft-img" onclick="expandImage(this)">
+                </div>
                 <div class="aircraft-info">
                     <h3>波音 737</h3>
                     <p>经典的单通道客机，经过现代化改造，提供舒适的短途飞行体验。</p>
@@ -462,5 +517,31 @@
             <p>&copy; 2025 巨象航空(JXAirlines) - 飞友航空旗下品牌. 保留所有权利.</p>
         </div>
     </footer>
+
+    <script>
+        // 图片放大功能
+        function expandImage(img) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('expandedImg');
+            
+            modal.classList.add('active');
+            modalImg.src = img.src;
+            modalImg.alt = img.alt;
+            
+            // 点击模态框外部或关闭按钮时关闭
+            modal.onclick = function(e) {
+                if (e.target === modal || e.target.classList.contains('close-modal')) {
+                    modal.classList.remove('active');
+                }
+            };
+            
+            // 按ESC键关闭
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape') {
+                    modal.classList.remove('active');
+                }
+            });
+        }
+    </script>
 </body>
 </html>
